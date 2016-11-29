@@ -136,16 +136,16 @@ public class NavigationOpMode extends LinearOpMode {
          * example "StonesAndChips", datasets can be found in in this project in the
          * documentation directory.
          */
-        VuforiaTrackables wheelsAndgears = this.vuforia.loadTrackablesFromAsset("FTC_2016-17");
-        VuforiaTrackable redTarget = wheelsAndgears.get(0);
+        VuforiaTrackables wheelsAndGears = this.vuforia.loadTrackablesFromAsset("FTC_2016-17");
+        VuforiaTrackable redTarget = wheelsAndGears.get(0);
         redTarget.setName("RedTarget");  // Stones
 
-        VuforiaTrackable blueTarget = wheelsAndgears.get(1);
+        VuforiaTrackable blueTarget = wheelsAndGears.get(1);
         blueTarget.setName("BlueTarget");  // Chips
 
         /** For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
-        allTrackables.addAll(wheelsAndgears);
+        allTrackables.addAll(wheelsAndGears);
 
         /**
          * We use units of mm here because that's the recommended units of measurement for the
@@ -293,7 +293,7 @@ public class NavigationOpMode extends LinearOpMode {
         waitForStart();
 
         /** Start tracking the data sets we care about. */
-        wheelsAndgears.activate();
+        wheelsAndGears.activate();
 
         while (opModeIsActive()) {
 

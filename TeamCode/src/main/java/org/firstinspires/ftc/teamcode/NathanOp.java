@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.vuforia.HINT;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-@TeleOp(name="Autonomous Opmode", group="Nathan")  // @Autonomous(...) is the other common choice
+@Autonomous(name="Nathan Opmode", group="Nathan")  // @Autonomous(...) is the other common choice
 public class NathanOp extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -34,23 +35,23 @@ public class NathanOp extends LinearOpMode {
 
         beacons.activate();
 
-        while (opModeIsActive()) ;
-        for (VuforiaTrackable beac : beacons) {
-            OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
+        while (opModeIsActive()) {
+            for (VuforiaTrackable beac : beacons) {
+                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) beac.getListener()).getPose();
 
-            if (pose != null) {
-                VectorF translation = pose.getTranslation();
+                if (pose != null) {
+                    VectorF translation = pose.getTranslation();
 
-                telemetry.addData(beac.getName() + "-Translation", translation);
-                double degreesToTurn = Math.toDegrees(Math.atan2(translation.get(1), translation.get(2)));
-                ;
+                    telemetry.addData(beac.getName() + "-Translation", translation);
+                    double degreesToTurn = Math.toDegrees(Math.atan2(translation.get(1), translation.get(2)));
+                    ;
 
-                telemetry.addData(beac.getName() + "-Degrees", degreesToTurn);
+                    telemetry.addData(beac.getName() + "-Degrees", degreesToTurn);
+
+                }
 
             }
-
         }
-
         telemetry.update();
 
     }
