@@ -134,21 +134,18 @@ public class VuforiaOp extends LinearOpMode {
          * example "StonesAndChips", datasets can be found in in this project in the
          * documentation directory.
          */
-        VuforiaTrackables wheelsAndGears = this.vuforia.loadTrackablesFromAsset("WheelsAndGears");
+        VuforiaTrackables wheelsAndGears = this.vuforia.loadTrackablesFromAsset("FTC_2016-17");
         VuforiaTrackable redTarget = wheelsAndGears.get(0);
-        redTarget.setName("RedTarget");  // Stones
+        redTarget.setName("Red-Wheels");  // Wheels
 
         VuforiaTrackable blueTarget  = wheelsAndGears.get(1);
-        blueTarget.setName("BlueTarget");  // Chips
+        blueTarget.setName("Blue-Tools");  // Tools
 
 //        VuforiaTrackables beacons = vuforia.loadTrackablesFromAsset("FTC_2016-17");
 //        beacons.get(0).setName("Wheels");
 //        beacons.get(1).setName("Tools");
 //        beacons.get(2).setName("Lego");
 //        beacons.get(3).setName("Gears");
-//
-//        VuforiaTrackable redTarget = beacons.get(0);
-//        redTarget.setName("Wheels");
 
         /** For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
