@@ -84,7 +84,7 @@ import java.util.List;
  * is explained below.
  */
 
-@Autonomous(name="Concept: Vuforia Navigation", group ="Concept")
+@Autonomous(name="Vuforia Op", group ="Concept")
 public class VuforiaOp extends LinearOpMode {
 
     public static final String TAG = "Vuforia Sample";
@@ -134,6 +134,7 @@ public class VuforiaOp extends LinearOpMode {
          * example "StonesAndChips", datasets can be found in in this project in the
          * documentation directory.
          */
+        //VuforiaTrackables wheelsAndGears = this.vuforia.loadTrackablesFromAsset("FTC_2016-17");
         VuforiaTrackables wheelsAndGears = this.vuforia.loadTrackablesFromAsset("FTC_2016-17");
         VuforiaTrackable redTarget = wheelsAndGears.get(0);
         redTarget.setName("Red-Wheels");  // Wheels
@@ -141,11 +142,11 @@ public class VuforiaOp extends LinearOpMode {
         VuforiaTrackable blueTarget  = wheelsAndGears.get(1);
         blueTarget.setName("Blue-Tools");  // Tools
 
-//        VuforiaTrackables beacons = vuforia.loadTrackablesFromAsset("FTC_2016-17");
-//        beacons.get(0).setName("Wheels");
-//        beacons.get(1).setName("Tools");
-//        beacons.get(2).setName("Lego");
-//        beacons.get(3).setName("Gears");
+        VuforiaTrackable YellowTarget  = wheelsAndGears.get(2);
+        YellowTarget.setName("Yellow-Legos");
+
+        VuforiaTrackable GreenTarget  = wheelsAndGears.get(3);
+        GreenTarget.setName("Green-Gears");
 
         /** For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
@@ -324,7 +325,6 @@ public class VuforiaOp extends LinearOpMode {
                 telemetry.addData("Pos", "Unknown");
             }
             telemetry.update();
-            idle();
         }
     }
 
