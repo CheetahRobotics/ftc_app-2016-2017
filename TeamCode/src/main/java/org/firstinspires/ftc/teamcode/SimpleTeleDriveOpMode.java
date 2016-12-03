@@ -32,6 +32,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -55,6 +57,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //@Disabled
 public class SimpleTeleDriveOpMode extends LinearOpMode {
 
+    float speedScaling;
+    boolean dPadPressed ;
+
+
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
      DcMotor leftMotor = null;
@@ -62,6 +68,8 @@ public class SimpleTeleDriveOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        speedScaling = 2.0f;
+        dPadPressed = false;
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -84,11 +92,46 @@ public class SimpleTeleDriveOpMode extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.update();
+//            telemetry.update();
 
             // eg: Run wheels in tank mode (note: The joystick goes negative when pushed forwards)
-            leftMotor.setPower(-gamepad1.left_stick_y/2.0);
-            rightMotor.setPower(+gamepad1.right_stick_y/2.0);
+            Log.i("DRW", String.format("Old scalar: %f", speedScaling));
+            if (gamepad1.dpad_down && !dPadPressed) {
+                speedScaling *= 2.0;
+                dPadPressed = true;
+            }
+            if (gamepad1.dpad_up && !dPadPressed) {
+                speedScaling /= 2.0;
+                dPadPressed = true;
+            }
+            if (!gamepad1.dpad_down && !gamepad1.dpad_up) {
+                dPadPressed = false;
+            }
+            Log.i("DRW", String.format("New scalar: %f", speedScaling));
+            double leftPower = -gamepad1.left_stick_y/speedScaling;
+            double rightPower = +gamepad1.right_stick_y/speedScaling;
+            if (leftPower <= -1.0 )
+            {
+                leftPower = -0.99;
+            }
+            if (rightPower <= -1 )
+            {
+                rightPower = -0.99;
+            }
+            if (leftPower >= 1 )
+            {
+                leftPower = 0.99;
+            }
+            if (rightPower >= 1 )
+            {
+                rightPower = 0.99;
+            }
+            leftMotor.setPower(leftPower);
+            rightMotor.setPower(rightPower);
+            telemetry.addData("Left Power", leftPower);
+            telemetry.addData("right Power", rightPower);
+            telemetry.addData("speedScaling", speedScaling);
+            telemetry.update();
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop
         }
