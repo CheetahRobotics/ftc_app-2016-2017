@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -65,6 +66,7 @@ public class SimpleTeleDriveOpMode extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
      DcMotor leftMotor = null;
      DcMotor rightMotor = null;
+    Servo armServo = null;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -79,7 +81,8 @@ public class SimpleTeleDriveOpMode extends LinearOpMode {
          */
         leftMotor  = hardwareMap.dcMotor.get("left_drive");
         rightMotor = hardwareMap.dcMotor.get("right_drive");
-
+        armServo = hardwareMap.servo.get("arm");
+        armServo.setPosition(0.5);
         // eg: Set the drive motor directions:
         // "Reverse" the motor that runs backwards when connected directly to the battery
         // leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
@@ -128,6 +131,8 @@ public class SimpleTeleDriveOpMode extends LinearOpMode {
             }
             leftMotor.setPower(leftPower);
             rightMotor.setPower(rightPower);
+            if (gamepad1.dpad_right)
+                armServo.setPosition(1.0);
             telemetry.addData("Left Power", leftPower);
             telemetry.addData("right Power", rightPower);
             telemetry.addData("speedScaling", speedScaling);
