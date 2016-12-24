@@ -111,8 +111,9 @@ public class SimpleTeleDriveOpMode extends LinearOpMode {
                 dPadPressed = false;
             }
             Log.i("DRW", String.format("New scalar: %f", speedScaling));
-            double leftPower = -gamepad1.left_stick_y/speedScaling;
-            double rightPower = +gamepad1.right_stick_y/speedScaling;
+            // our motors are reversed so we are swapping left and right. 12/2016
+            double rightPower = -gamepad1.left_stick_y/speedScaling;
+            double leftPower = +gamepad1.right_stick_y/speedScaling;
             if (leftPower <= -1.0 )
             {
                 leftPower = -0.99;
@@ -133,6 +134,9 @@ public class SimpleTeleDriveOpMode extends LinearOpMode {
             rightMotor.setPower(rightPower);
             if (gamepad1.dpad_right)
                 armServo.setPosition(1.0);
+            if (gamepad1.dpad_left)
+                armServo.setPosition(0.0);
+            telemetry.addData("Servo Position", armServo.getPosition());
             telemetry.addData("Left Power", leftPower);
             telemetry.addData("right Power", rightPower);
             telemetry.addData("speedScaling", speedScaling);
